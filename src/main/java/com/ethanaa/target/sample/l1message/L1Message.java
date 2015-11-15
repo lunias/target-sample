@@ -21,7 +21,12 @@ import java.io.IOException;
  * is undesirable.
  *<br/>
  * The key components of an L1Message are: {@link L1MessageType} and {@link EntityInfo}.
- *<br/><br/>
+ * <br/><br/>
+ * This class provides a built-in {@link ObjectMapper} for converting to and from json.
+ * It is recommended to use the methods {@link #toJson() toJson()} and
+ * {@link #fromJson(String, Class)} for serialization / deserialization to maintain
+ * consistency during integration.
+ * <br/><br/>
  * Note: Make sure to update {@link EntityInfo} with any new {@link EntityId}s which you
  * have added.
  *
