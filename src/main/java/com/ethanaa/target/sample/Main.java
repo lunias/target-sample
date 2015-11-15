@@ -1,6 +1,7 @@
 package com.ethanaa.target.sample;
 
 
+import com.ethanaa.target.sample.l1message.L1Message;
 import com.ethanaa.target.sample.l1message.entity.EntityType;
 import com.ethanaa.target.sample.l1message.impl.ContactMechanismUpdateNotification;
 import com.ethanaa.target.sample.l1message.type.L1Notification;
@@ -31,17 +32,18 @@ public class Main {
 
         String json = "";
         try {
-            System.out.println("WRITE:");
-            json = writer.writeValueAsString(notification);
-            System.out.println(json);
-        } catch (Exception e) { e.printStackTrace(); }
 
-        ObjectReader reader = mapper.readerFor(ContactMechanismUpdateNotification.class);
+            System.out.println("WRITE:");
+            json = notification.toJson();
+            System.out.println(json);
+
+        } catch (Exception e) { e.printStackTrace(); }
 
         try {
             System.out.println("READ:");
 
-            ContactMechanismUpdateNotification notification1 = reader.readValue(json);
+            ContactMechanismUpdateNotification notification1 =
+                    L1Message.fromJson(json, ContactMechanismUpdateNotification.class);
 
             System.out.println(notification1);
 
@@ -70,16 +72,19 @@ public class Main {
 
         String json2 = "";
         try {
-            System.out.println("WRITE:");
-            json2 = writer.writeValueAsString(request);
-            System.out.println(json2);
-        } catch (Exception e) { e.printStackTrace(); }
 
-        reader = mapper.readerFor(IdentityPostRequest.class);
+            System.out.println("WRITE:");
+            json2 = request.toJson();
+            System.out.println(json2);
+
+        } catch (Exception e) { e.printStackTrace(); }
 
         try {
             System.out.println("READ:");
-            IdentityPostRequest request1 = reader.readValue(json2);
+
+            IdentityPostRequest request1 =
+                    L1Message.fromJson(json2, IdentityPostRequest.class);
+
             System.out.println(request1);
 
             System.out.println("\n----------------------------\n");

@@ -7,27 +7,45 @@ import com.ethanaa.target.sample.l1message.type.L1MessageType;
 import com.ethanaa.target.sample.l1message.type.L1Notification;
 import com.ethanaa.target.sample.l1message.type.L1RESTRequest;
 import com.ethanaa.target.sample.model.CanonicalEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import java.io.IOException;
 
 /**
- * Base class for messages passed into an L1 application where direct RESTful communication is undesirable.
+ * Base class for messages passed into an L1 application where direct RESTful communication
+ * is undesirable.
  *<br/>
  * The key components of an L1Message are: {@link L1MessageType} and {@link EntityInfo}.
  *<br/><br/>
- * Note: Make sure to update {@link EntityInfo} with any new {@link EntityId}s which you have added.
+ * Note: Make sure to update {@link EntityInfo} with any new {@link EntityId}s which you
+ * have added.
  *
  * @param <E> {@link CanonicalEntity} - The canonical entity
  * @param <I> {@link EntityId} - The entity's id enum
  * @param <T> {@link L1MessageType} - The message type
  */
 @JsonPropertyOrder({ "messageType", "entityInfo", "entity" })
-public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T extends L1MessageType> {
+public abstract class L1Message
+        <E extends CanonicalEntity, I extends EntityId, T extends L1MessageType> {
+
+    private static final ObjectMapper MAPPER;
+
+    static {
+
+        MAPPER = new ObjectMapper();
+
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
     /**
-     * Note: Make sure to update {@code @JsonSubTypes} with any new {@link L1MessageType}s which you have added.
+     * Note: Make sure to update {@code @JsonSubTypes} with any new {@link L1MessageType}s
+     * which you have added.
      */
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
@@ -89,13 +107,14 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
     /**
      * Get the {@link EntityInfo}.
      *
-     * @return {@link EntityInfo} - information about the entity which the message is targeting
+     * @return {@link EntityInfo} - information about the entity which the message is
+     * targeting
      */
     public EntityInfo<I> getEntityInfo() {
         return entityInfo;
     }
 
-    protected void setEntityInfo(EntityInfo entityInfo) {
+    protected void setEntityInfo(EntityInfo<I> entityInfo) {
         this.entityInfo = entityInfo;
     }
 
@@ -105,7 +124,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      * @return {@link EntityType} - the type of the entity
      */
     @JsonIgnore
-    public EntityType getEntityType() {
+    public final EntityType getEntityType() {
         return entityInfo.getEntityType();
     }
 
@@ -115,7 +134,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      * @return {@link Class} - the class of the entity
      */
     @JsonIgnore
-    public Class getEntityClass() {
+    public final Class getEntityClass() {
         return getEntityType().getClazz();
     }
 
@@ -125,7 +144,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      * @return {@link EntityId} - the entity's id enum value
      */
     @JsonIgnore
-    public I getEntityIdProperty() {
+    public final I getEntityIdProperty() {
         return entityInfo.getEntityIdProperty();
     }
 
@@ -135,7 +154,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      * @return {@link String} - the entity's id value
      */
     @JsonIgnore
-    public String getEntityIdValue() {
+    public final String getEntityIdValue() {
         return entityInfo.getEntityIdValue();
     }
 
@@ -144,7 +163,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      *
      * @return {@link E}
      */
-    public E getEntity() {
+    public final E getEntity() {
         return entity;
     }
 
@@ -153,8 +172,47 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
      *
      * @param entity {@link E} - the entity
      */
-    public void setEntity(E entity) {
+    public final void setEntity(E entity) {
         this.entity = entity;
+    }
+
+    /**
+     * Get the json representation of this message.
+     * <br/>
+     * <br/>
+     * Uses the internal static singleton {@link ObjectMapper} to create {@link ObjectWriter}s
+     * for processing in a thread safe and performant manner.
+     *
+     * @return {@link String} - json representation of the message
+     * @throws JsonProcessingException when processing failed
+     */
+    public String toJson()
+            throws JsonProcessingException {
+
+        ObjectWriter writer = MAPPER.writerWithDefaultPrettyPrinter();
+
+        return writer.writeValueAsString(this);
+    }
+
+    /**
+     * Convert an implementation of {@link L1Message} to its json representation.
+     * <br/>
+     * <br/>
+     * Uses the internal static singleton {@link ObjectMapper} to create {@link ObjectReader}s
+     * for processing in a thread safe and performant manner.
+     *
+     * @param json {@link String} - json representation of the message
+     * @param l1MessageClass {@link Class} - class of the {@link L1Message} implementation
+     * @param <T> {@link L1MessageType} - implementation of {@link L1MessageType}
+     * @return {@link L1Message} - the {@link L1Message} read from the provided json
+     * @throws IOException when processing failed
+     */
+    public static <T extends L1Message> T fromJson(String json, Class<T> l1MessageClass)
+            throws IOException {
+
+        ObjectReader reader = MAPPER.readerFor(l1MessageClass);
+
+        return reader.readValue(json);
     }
 
     @Override

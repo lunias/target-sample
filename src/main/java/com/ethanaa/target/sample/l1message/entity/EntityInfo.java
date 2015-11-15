@@ -7,10 +7,12 @@ import com.ethanaa.target.sample.model.identity.IdentityId;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Information on an entity's type, the property which identifies it, and the value of that identifying property.
+ * Information on an entity's type, the property which identifies it, and the value of that
+ * identifying property.
  * <br/>
  * <br/>
- * The {@link EntityType} is derived from the provided {@link EntityId} to prevent mismatched identifiers.
+ * The {@link EntityType} is derived from the provided {@link EntityId} to prevent mismatched
+ * identifiers.
  *
  * @param <I> {@link EntityId} - the entity's id enum
  */
@@ -20,7 +22,8 @@ public class EntityInfo<I extends EntityId> {
     private EntityType entityType;
 
     /**
-     * Note: Make sure to update {@code @JsonSubTypes} with any new {@link EntityId}s which you have added.
+     * Note: Make sure to update {@code @JsonSubTypes} with any new {@link EntityId}s which
+     * you have added.
      */
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
@@ -95,7 +98,7 @@ public class EntityInfo<I extends EntityId> {
      *
      * @return {@link Class} - the entity's class
      */
-    public Class<? extends CanonicalEntity> getEntityClass() {
+    public final Class<? extends CanonicalEntity> getEntityClass() {
         return entityType.getClazz();
     }
 
