@@ -31,7 +31,7 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
     })
     private T messageType;
 
-    private EntityInfo entityInfo;
+    private EntityInfo<I> entityInfo;
 
     private E entity;
 
@@ -72,9 +72,8 @@ public abstract class L1Message<E extends CanonicalEntity, I extends EntityId, T
     }
 
     @JsonIgnore
-    @SuppressWarnings("unchecked")
     public I getEntityIdProperty() {
-        return (I) entityInfo.getEntityIdProperty();
+        return entityInfo.getEntityIdProperty();
     }
 
     @JsonIgnore
