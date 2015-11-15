@@ -85,6 +85,11 @@ public class EntityInfo<I extends EntityId> {
         return entityType;
     }
 
+    @JsonIgnore
+    protected void setEntityType(EntityType type) {
+        this.entityType = type;
+    }
+
     /**
      * Get the {@link Class} of the {@link EntityType}.
      *
@@ -92,11 +97,6 @@ public class EntityInfo<I extends EntityId> {
      */
     public Class<? extends CanonicalEntity> getEntityClass() {
         return entityType.getClazz();
-    }
-
-    @JsonIgnore
-    protected void setEntityType(EntityType type) {
-        this.entityType = type;
     }
 
     /**
