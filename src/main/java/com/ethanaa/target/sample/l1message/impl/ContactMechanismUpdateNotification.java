@@ -10,10 +10,10 @@ import com.ethanaa.target.sample.model.contactmech.ContactMechanismId;
 
 public class ContactMechanismUpdateNotification extends L1Message<ContactMechanism, ContactMechanismId, L1Notification> {
 
-    public ContactMechanismUpdateNotification(String contactMechanismValue) {
+    public ContactMechanismUpdateNotification(ContactMechanismId contactMechanismId, String contactMechanismValue) {
 
         super(L1Notification.UPDATED,
-                new EntityInfo<>(ContactMechanismId.CONTACT_MECHANISM_VALUE, contactMechanismValue));
+                new EntityInfo<>(contactMechanismId, contactMechanismValue));
     }
 
     public ContactMechanismUpdateNotification() {

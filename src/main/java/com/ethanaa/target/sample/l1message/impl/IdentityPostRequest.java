@@ -11,13 +11,36 @@ import com.ethanaa.target.sample.model.identity.IdentityId;
 
 public class IdentityPostRequest extends L1Message<Identity, IdentityId, L1RESTRequest> {
 
-    public IdentityPostRequest(Identity identity) {
+    private boolean isAssociated = false;
+
+    public IdentityPostRequest(Identity identity, boolean isAssociated) {
 
         super(L1RESTRequest.POST,
                 new EntityInfo<>(IdentityId.TARGET_GUID, identity.getTargetGuid()), identity);
+
+        setIsAssociated(isAssociated);
+    }
+
+    public IdentityPostRequest(Identity identity) {
+        this(identity, false);
     }
 
     public IdentityPostRequest() {
         super();
+    }
+
+    public boolean getIsAssociated() {
+        return isAssociated;
+    }
+
+    public void setIsAssociated(boolean isAssociated) {
+        this.isAssociated = isAssociated;
+    }
+
+    @Override
+    public String toString() {
+        return "IdentityPostRequest{" +
+                "isAssociated=" + isAssociated +
+                "} " + super.toString();
     }
 }

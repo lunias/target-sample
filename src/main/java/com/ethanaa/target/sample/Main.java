@@ -24,7 +24,8 @@ public class Main {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        ContactMechanismUpdateNotification notification = new ContactMechanismUpdateNotification("test@gmail.com");
+        ContactMechanismUpdateNotification notification = new ContactMechanismUpdateNotification(
+                ContactMechanismId.CONTACT_MECHANISM_VALUE, "test@gmail.com");
 
         ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
 
@@ -48,7 +49,7 @@ public class Main {
 
             L1Notification requestType = notification1.getMessageType();
             EntityType entityType = notification1.getEntityType();
-            Class clazz = notification1.getEntityType().getClazz();
+            Class clazz = notification1.getEntityClass();
             ContactMechanismId idProperty = notification1.getEntityIdProperty();
             String idValue = notification1.getEntityIdValue();
             ContactMechanism entity = notification1.getEntity();
@@ -85,10 +86,11 @@ public class Main {
 
             L1RESTRequest requestType = request1.getMessageType();
             EntityType entityType = request1.getEntityType();
-            Class clazz = request1.getEntityType().getClazz();
+            Class clazz = request1.getEntityClass();
             IdentityId idProperty = request1.getEntityIdProperty();
             String idValue = request1.getEntityIdValue();
             Identity entity = request1.getEntity();
+            boolean isAssociated = request1.getIsAssociated();
 
             System.out.println("request type: " + requestType);
             System.out.println("type: " + entityType);
@@ -96,6 +98,7 @@ public class Main {
             System.out.println("id property: " + idProperty);
             System.out.println("id value: " + idValue);
             System.out.println("entity: " + entity);
+            System.out.println("associated: " + isAssociated);
 
         } catch (Exception e) { e.printStackTrace(); }
 
