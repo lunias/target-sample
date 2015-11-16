@@ -21,14 +21,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
         ContactMechanismUpdateNotification notification = new ContactMechanismUpdateNotification(
                 ContactMechanismId.CONTACT_MECHANISM_VALUE, "test@gmail.com");
-
-        ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
 
         String json = "";
         try {
@@ -66,7 +60,7 @@ public class Main {
         } catch (Exception e) { e.printStackTrace(); }
 
 
-        System.out.println();
+        System.out.println("\n================================\n");
 
         IdentityPostRequest request = new IdentityPostRequest(new Identity("31234"));
 
