@@ -34,11 +34,12 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.*;
  *
  * @param <E> {@link CanonicalEntity} - The canonical entity
  * @param <I> {@link EntityId} - The entity's id enum
+ * @param <V> {@link Object} - The entity's id value type
  * @param <T> {@link L1MessageType} - The message type
  */
 @JsonPropertyOrder({ "messageType", "entityInfo", "entity" })
 public abstract class L1Message
-        <E extends CanonicalEntity, I extends EntityId<E>, T extends L1MessageType> {
+        <E extends CanonicalEntity, I extends EntityId<E>, V, T extends L1MessageType> {
 
     private static final ObjectMapper MAPPER;
 
@@ -63,7 +64,7 @@ public abstract class L1Message
     })
     private T messageType;
 
-    private EntityInfo<I> entityInfo;
+    private EntityInfo<I, V> entityInfo;
 
     private E entity;
 
@@ -74,7 +75,7 @@ public abstract class L1Message
      * @param entityInfo {@link EntityInfo}
      * @param entity {@link CanonicalEntity}
      */
-    public L1Message(T messageType, EntityInfo<I> entityInfo, E entity) {
+    public L1Message(T messageType, EntityInfo<I, V> entityInfo, E entity) {
 
         this.messageType = messageType;
         this.entityInfo = entityInfo;
@@ -87,7 +88,7 @@ public abstract class L1Message
      * @param messageType {@link L1MessageType}
      * @param entityInfo {@link EntityInfo}
      */
-    public L1Message(T messageType, EntityInfo<I> entityInfo) {
+    public L1Message(T messageType, EntityInfo<I, V> entityInfo) {
         this(messageType, entityInfo, null);
     }
 
@@ -117,11 +118,11 @@ public abstract class L1Message
      * @return {@link EntityInfo} - information about the entity which the message is
      * targeting
      */
-    public EntityInfo<I> getEntityInfo() {
+    public EntityInfo<I, V> getEntityInfo() {
         return entityInfo;
     }
 
-    protected void setEntityInfo(EntityInfo<I> entityInfo) {
+    protected void setEntityInfo(EntityInfo<I, V> entityInfo) {
         this.entityInfo = entityInfo;
     }
 
@@ -158,10 +159,10 @@ public abstract class L1Message
     /**
      * Get the id value.
      *
-     * @return {@link String} - the entity's id value
+     * @return {@link Object} - the entity's id value
      */
     @JsonIgnore
-    public final String getEntityIdValue() {
+    public final V getEntityIdValue() {
         return entityInfo.getEntityIdValue();
     }
 

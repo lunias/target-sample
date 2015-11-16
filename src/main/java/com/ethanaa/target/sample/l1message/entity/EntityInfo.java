@@ -18,9 +18,10 @@ import static com.ethanaa.target.sample.l1message.entity.EntityType.Constants.*;
  * identifiers.
  *
  * @param <I> {@link EntityId} - the entity's id enum
+ * @param <T> {@link Object} - the entity's id value type
  */
 @JsonPropertyOrder({ "entityType", "entityClass", "entityIdProperty", "entityIdValue" })
-public class EntityInfo<I extends EntityId> {
+public class EntityInfo<I extends EntityId, T> {
 
     private EntityType entityType;
 
@@ -40,15 +41,15 @@ public class EntityInfo<I extends EntityId> {
     })
     private I entityIdProperty;
 
-    private String entityIdValue;
+    private T entityIdValue;
 
     /**
      * Constructor for the information necessary to identify the entity.
      *
      * @param entityIdProperty {@link EntityId} - the entity's identifying property
-     * @param entityIdValue {@link String} - the entity's id value
+     * @param entityIdValue {@link Object} - the entity's id value
      */
-    public EntityInfo(I entityIdProperty, String entityIdValue) {
+    public EntityInfo(I entityIdProperty, T entityIdValue) {
 
         if (entityIdProperty == null) {
             throw new IllegalArgumentException("entityIdProperty cannot be null");
@@ -128,18 +129,18 @@ public class EntityInfo<I extends EntityId> {
     /**
      * Get the id value.
      *
-     * @return {@link String} - the entity's id value
+     * @return {@link Object} - the entity's id value
      */
-    public String getEntityIdValue() {
+    public T getEntityIdValue() {
         return entityIdValue;
     }
 
     /**
      * Set the id value.
      *
-     * @param entityIdValue {@link String} - the entity's id value
+     * @param entityIdValue {@link Object} - the entity's id value
      */
-    public void setEntityIdValue(String entityIdValue) {
+    public void setEntityIdValue(T entityIdValue) {
         this.entityIdValue = entityIdValue;
     }
 

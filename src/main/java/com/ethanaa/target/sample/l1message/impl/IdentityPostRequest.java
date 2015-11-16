@@ -9,7 +9,7 @@ import com.ethanaa.target.sample.model.contactmech.ContactMechanismId;
 import com.ethanaa.target.sample.model.identity.Identity;
 import com.ethanaa.target.sample.model.identity.IdentityId;
 
-public class IdentityPostRequest extends L1Message<Identity, IdentityId, L1RESTRequest> {
+public class IdentityPostRequest extends L1Message<Identity, IdentityId, String, L1RESTRequest> {
 
     private boolean isAssociated = false;
 

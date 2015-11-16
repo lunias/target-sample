@@ -9,7 +9,7 @@ import com.ethanaa.target.sample.model.contactmech.ContactMechanism;
 import com.ethanaa.target.sample.model.contactmech.ContactMechanismId;
 import com.ethanaa.target.sample.model.identity.Identity;
 
-public class ContactMechanismUpdateNotification extends L1Message<ContactMechanism, ContactMechanismId, L1Notification> {
+public class ContactMechanismUpdateNotification extends L1Message<ContactMechanism, ContactMechanismId, String, L1Notification> {
 
     public ContactMechanismUpdateNotification(ContactMechanismId contactMechanismId, String contactMechanismValue) {
 
