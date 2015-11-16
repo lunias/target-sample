@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.IOException;
 
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.*;
+
 /**
  * Base class for messages passed into an L1 application where direct RESTful communication
  * is undesirable.
@@ -53,8 +55,8 @@ public abstract class L1Message
      * which you have added.
      */
     @JsonTypeInfo(
-            use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.WRAPPER_OBJECT)
+            use = Id.NAME,
+            include = As.WRAPPER_OBJECT)
     @JsonSubTypes({
             @JsonSubTypes.Type(L1RESTRequest.class),
             @JsonSubTypes.Type(L1Notification.class)

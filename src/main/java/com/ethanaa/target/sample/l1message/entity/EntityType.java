@@ -5,26 +5,28 @@ import com.ethanaa.target.sample.model.CanonicalEntity;
 import com.ethanaa.target.sample.model.contactmech.ContactMechanism;
 import com.ethanaa.target.sample.model.identity.Identity;
 
+import static com.ethanaa.target.sample.l1message.entity.EntityType.Constants.*;
+
 /**
  * Enum which defines the types of entities as well as providing access to the entity's class.
  */
 public enum EntityType {
 
-    CONTACT_MECHANISM(ContactMechanism.class, Constants.CONTACT_MECHANISM_VALUE),
-    IDENTITY(Identity.class, Constants.IDENTITY_VALUE);
+    CONTACT_MECHANISM(ContactMechanism.class, CONTACT_MECHANISM_NAME),
+    IDENTITY(Identity.class, IDENTITY_NAME);
 
     public static class Constants {
-        public static final String CONTACT_MECHANISM_VALUE = "ContactMechanism";
-        public static final String IDENTITY_VALUE = "Identity";
+        public static final String CONTACT_MECHANISM_NAME = "ContactMechanism";
+        public static final String IDENTITY_NAME = "Identity";
     }
 
-    private String simpleName;
+    private String name;
     private Class<? extends CanonicalEntity> clazz;
 
-    EntityType(Class<? extends CanonicalEntity> clazz, String simpleName) {
+    EntityType(Class<? extends CanonicalEntity> clazz, String name) {
 
         this.clazz = clazz;
-        this.simpleName = simpleName;
+        this.name = name;
     }
 
     /**
@@ -63,6 +65,6 @@ public enum EntityType {
      */
     @Override
     public String toString() {
-        return this.simpleName;
+        return this.name;
     }
 }

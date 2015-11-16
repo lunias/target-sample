@@ -6,6 +6,9 @@ import com.ethanaa.target.sample.model.contactmech.ContactMechanismId;
 import com.ethanaa.target.sample.model.identity.IdentityId;
 import com.fasterxml.jackson.annotation.*;
 
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.*;
+import static com.ethanaa.target.sample.l1message.entity.EntityType.Constants.*;
+
 /**
  * Information on an entity's type, the property which identifies it, and the value of that
  * identifying property.
@@ -26,14 +29,14 @@ public class EntityInfo<I extends EntityId> {
      * you have added.
      */
     @JsonTypeInfo(
-            use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+            use = Id.NAME,
+            include = As.EXTERNAL_PROPERTY,
             property = "entityType")
     @JsonSubTypes({
             @JsonSubTypes.Type(value = ContactMechanismId.class,
-                               name = EntityType.Constants.CONTACT_MECHANISM_VALUE),
+                               name = CONTACT_MECHANISM_NAME),
             @JsonSubTypes.Type(value = IdentityId.class,
-                               name = EntityType.Constants.IDENTITY_VALUE)
+                               name = IDENTITY_NAME)
     })
     private I entityIdProperty;
 
