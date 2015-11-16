@@ -69,13 +69,13 @@ public abstract class L1Message
     private E entity;
 
     /**
-     * Constructor for messages which have an attached entity.
+     * Helper constructor for messages which have an attached entity.
      *
      * @param messageType {@link L1MessageType}
      * @param entityInfo {@link EntityInfo}
      * @param entity {@link CanonicalEntity}
      */
-    public L1Message(T messageType, EntityInfo<I, V> entityInfo, E entity) {
+    private L1Message(T messageType, EntityInfo<I, V> entityInfo, E entity) {
 
         this.messageType = messageType;
         this.entityInfo = entityInfo;
@@ -83,13 +83,36 @@ public abstract class L1Message
     }
 
     /**
-     * Constructor for messages.
+     * Helper constructor for messages.
      *
      * @param messageType {@link L1MessageType}
      * @param entityInfo {@link EntityInfo}
      */
-    public L1Message(T messageType, EntityInfo<I, V> entityInfo) {
+    private L1Message(T messageType, EntityInfo<I, V> entityInfo) {
         this(messageType, entityInfo, null);
+    }
+
+    /**
+     * Constructor for messages.
+     *
+     * @param messageType {@link L1MessageType}
+     * @param entityId {@link EntityId}
+     * @param entityIdValueType {@link Object}
+     */
+    public L1Message(T messageType, I entityId, V entityIdValueType) {
+        this(messageType, new EntityInfo<>(entityId, entityIdValueType));
+    }
+
+    /**
+     * Constructor for messages with an attached entity.
+     *
+     * @param messageType {@link L1MessageType}
+     * @param entityId {@link EntityId}
+     * @param entityIdValueType {@link Object}
+     * @param entity {@link CanonicalEntity}
+     */
+    public L1Message(T messageType, I entityId, V entityIdValueType, E entity) {
+        this(messageType, new EntityInfo<>(entityId, entityIdValueType), entity);
     }
 
     /**

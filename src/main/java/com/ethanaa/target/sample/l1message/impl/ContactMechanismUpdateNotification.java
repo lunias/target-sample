@@ -13,8 +13,7 @@ public class ContactMechanismUpdateNotification extends L1Message<ContactMechani
 
     public ContactMechanismUpdateNotification(ContactMechanismId contactMechanismId, String contactMechanismValue) {
 
-        super(L1Notification.UPDATED,
-                new EntityInfo<>(contactMechanismId, contactMechanismValue));
+        super(L1Notification.UPDATED, contactMechanismId, contactMechanismValue);
     }
 
     public ContactMechanismUpdateNotification() {

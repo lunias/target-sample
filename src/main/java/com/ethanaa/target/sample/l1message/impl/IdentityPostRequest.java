@@ -15,8 +15,7 @@ public class IdentityPostRequest extends L1Message<Identity, IdentityId, String,
 
     public IdentityPostRequest(Identity identity, boolean isAssociated) {
 
-        super(L1RESTRequest.POST,
-                new EntityInfo<>(IdentityId.TARGET_GUID, identity.getTargetGuid()), identity);
+        super(L1RESTRequest.POST, IdentityId.TARGET_GUID, identity.getTargetGuid(), identity);
 
         setIsAssociated(isAssociated);
     }
