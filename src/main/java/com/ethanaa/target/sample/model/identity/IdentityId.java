@@ -7,7 +7,7 @@ import com.ethanaa.target.sample.l1message.entity.EntityType;
 /**
  * Enum which defines the properties which identify an {@link Identity}.
  */
-public enum IdentityId implements EntityId {
+public enum IdentityId implements EntityId<Identity> {
 
     TARGET_GUID, IDENTITY_ID;
 

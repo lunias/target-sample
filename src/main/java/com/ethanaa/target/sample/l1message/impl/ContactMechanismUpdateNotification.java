@@ -7,6 +7,7 @@ import com.ethanaa.target.sample.l1message.entity.EntityInfo;
 import com.ethanaa.target.sample.l1message.entity.EntityType;
 import com.ethanaa.target.sample.model.contactmech.ContactMechanism;
 import com.ethanaa.target.sample.model.contactmech.ContactMechanismId;
+import com.ethanaa.target.sample.model.identity.Identity;
 
 public class ContactMechanismUpdateNotification extends L1Message<ContactMechanism, ContactMechanismId, L1Notification> {
 

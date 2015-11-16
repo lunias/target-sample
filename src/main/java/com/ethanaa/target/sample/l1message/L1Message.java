@@ -36,7 +36,7 @@ import java.io.IOException;
  */
 @JsonPropertyOrder({ "messageType", "entityInfo", "entity" })
 public abstract class L1Message
-        <E extends CanonicalEntity, I extends EntityId, T extends L1MessageType> {
+        <E extends CanonicalEntity, I extends EntityId<E>, T extends L1MessageType> {
 
     private static final ObjectMapper MAPPER;
 
