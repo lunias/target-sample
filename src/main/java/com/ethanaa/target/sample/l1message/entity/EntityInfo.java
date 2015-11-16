@@ -30,8 +30,10 @@ public class EntityInfo<I extends EntityId> {
             include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
             property = "entityType")
     @JsonSubTypes({
-            @JsonSubTypes.Type(value = ContactMechanismId.class, name = "ContactMechanism"),
-            @JsonSubTypes.Type(value = IdentityId.class, name = "Identity")
+            @JsonSubTypes.Type(value = ContactMechanismId.class,
+                               name = EntityType.Constants.CONTACT_MECHANISM_VALUE),
+            @JsonSubTypes.Type(value = IdentityId.class,
+                               name = EntityType.Constants.IDENTITY_VALUE)
     })
     private I entityIdProperty;
 

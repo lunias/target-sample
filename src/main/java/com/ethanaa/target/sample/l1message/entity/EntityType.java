@@ -10,16 +10,21 @@ import com.ethanaa.target.sample.model.identity.Identity;
  */
 public enum EntityType {
 
-    CONTACT_MECHANISM(ContactMechanism.class),
-    IDENTITY(Identity.class);
+    CONTACT_MECHANISM(ContactMechanism.class, Constants.CONTACT_MECHANISM_VALUE),
+    IDENTITY(Identity.class, Constants.IDENTITY_VALUE);
 
-    private String className;
+    public static class Constants {
+        public static final String CONTACT_MECHANISM_VALUE = "ContactMechanism";
+        public static final String IDENTITY_VALUE = "Identity";
+    }
+
+    private String simpleName;
     private Class<? extends CanonicalEntity> clazz;
 
-    EntityType(Class<? extends CanonicalEntity> clazz) {
+    EntityType(Class<? extends CanonicalEntity> clazz, String simpleName) {
 
         this.clazz = clazz;
-        this.className = clazz.getSimpleName();
+        this.simpleName = simpleName;
     }
 
     /**
@@ -34,20 +39,20 @@ public enum EntityType {
     /**
      * Parse the provided simple class name of the entity and return the corresponding {@link EntityType}.
      *
-     * @param className {@link String} - the simple name of the entity class
+     * @param simpleName {@link String} - the simple name of the entity class
      * @return {@link EntityType} - the enum value representing the entity
      */
-    public static EntityType fromString(String className) {
+    public static EntityType fromString(String simpleName) {
 
-        if (className != null) {
+        if (simpleName != null) {
             for (EntityType entityType : EntityType.values()) {
-                if (className.equalsIgnoreCase(entityType.toString())) {
+                if (simpleName.equalsIgnoreCase(entityType.toString())) {
                     return entityType;
                 }
             }
         }
 
-        throw new IllegalArgumentException(String.format("%s is not a valid EntityType.", className));
+        throw new IllegalArgumentException(String.format("%s is not a valid EntityType.", simpleName));
     }
 
 
@@ -58,6 +63,6 @@ public enum EntityType {
      */
     @Override
     public String toString() {
-        return this.className;
+        return this.simpleName;
     }
 }
